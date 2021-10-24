@@ -1,0 +1,15 @@
+{application, cache,
+ [{description, "TCP服务器内容缓存服务"},
+  {vsn, "0.1.0"},
+  {registered, [cache_sup]},
+  {mod, {cache_app, []}},
+  {applications,
+   [kernel,
+    stdlib
+   ]},
+  {env,[]},
+  {modules, [cache_app,cache_sup]},
+
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.

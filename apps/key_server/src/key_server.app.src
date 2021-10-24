@@ -1,0 +1,16 @@
+{application, key_server,
+ [{description, "TCP KEY服务器服务"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {mod, {key_server_app, []}},
+  {applications,
+   [kernel,
+    stdlib,
+    cache
+   ]},
+  {env,[]},
+  {modules, []},
+
+  {licenses, ["Apache 2.0"]},
+  {links, []}
+ ]}.
