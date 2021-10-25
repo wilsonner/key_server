@@ -1,5 +1,5 @@
 ### 简介
-一个简易的 KEY 服务器, 基于 TCP 实现，服务端自定义 KV，客户端根据 KEY 获取 服务端的 VALUE
+一个简易的 KV 服务器, 基于 TCP 实现，服务端自定义 KV 和 过期时间，客户端向服务端获取 KEY 对应的 VALUE
 
 ### 设计方案
 工程包含两个应用，主应用 `key_server` 和 `cache`，进程结构均为一个监督者 ➕ 多个 `simple one for one` 子进程。
