@@ -2,7 +2,7 @@
 一个简易的 KEY 服务器, 基于 TCP 实现，服务端自定义 KV，客户端根据 KEY 获取 服务端的 VALUE
 
 ### 设计方案
-工程包含两个应用，主应用 `key_server` 和 `cache`，两个应用均是一个监督者进程多个 `simple one for one` 子进程树结构。`cache` 插件实际管理 KV，VALUE 采用一个 `gen_server` 进程管理，KEY 与 `gen_server` 的 pid 维护在 `ets` 表内，所以通过 KEY 可以先找到 pid 再获取到 VALUE。主应用 `key_server` 是一个基于 TCP 的服务器，每个连接采用一个 `gen_server` 管理，进程收到 socket 数据后按照如下二进制协议解析：第一字节前4位代表协议版本号后四位代表消息 id 第二字节开始剩余部分代表 KEY，完成解析后进程会调用 `cache` 插件的函数检索对应 VALUE，并将检索结果以及消息 id 统一应答给客户端
+工程包含两个应用，主应用 `key_server` 和 `cache`，进程结构均为一个监督者 ➕ 多个 `simple one for one` 子进程。`cache` 插件实际管理 KV，VALUE 采用一个 `gen_server` 进程管理，KEY 与 `gen_server` 的 pid 维护在 `ets` 表内，所以通过 KEY 可以先找到 pid 再获取到 VALUE。主应用 `key_server` 是一个基于 TCP 的服务器，每个连接采用一个 `gen_server` 管理，进程收到 socket 数据后按照如下二进制协议解析：第一字节前4位代表协议版本号后四位代表消息 id 第二字节开始剩余部分代表 KEY，完成解析后进程会调用 `cache` 插件的函数检索对应 VALUE，并将检索结果以及消息 id 统一应答给客户端
 
 ### 服务端模块介绍
 - `key_server`：监听8888端口，accept socket，创建连接管理进程，绑定 socket 和 连接管理进程
